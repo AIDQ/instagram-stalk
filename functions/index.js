@@ -1,10 +1,9 @@
 const functions = require('firebase-functions');
 const express = require('express');
-const request = require('request');
+const accountsHandler = require('./app/routes/accounts-handler');
 
+const app = express();
+app.use('/accounts', accountsHandler);
 
-app.use('/users', (req, res) => {
-
-});
-
-module.exports.instagram = functions.https.onRequest(app);
+// module.exports.instagram = functions.https.onRequest(app);
+app.listen(80);
