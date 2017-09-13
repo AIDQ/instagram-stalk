@@ -11,6 +11,10 @@
     ],
     "rewrites": [
       {
+        "source": "/instagram",
+        "function": "instagram"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

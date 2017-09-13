@@ -5,5 +5,5 @@ const accountsHandler = require('./app/routes/accounts-handler');
 const app = express();
 app.use('/accounts', accountsHandler);
 
-// module.exports.instagram = functions.https.onRequest(app);
-app.listen(80);
+// app.listen(80);
+module.exports.instagram = functions.https.onRequest(app);
