@@ -7,12 +7,14 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { ImagePopupComponent } from './image-popup/image-popup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
+    ImagePopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -20,6 +22,7 @@ import { HomeComponent } from './home/home.component';
     BrowserAnimationsModule,
     AppRoutingModule,
   ],
+  entryComponents: [ImagePopupComponent],
   providers: [],
   bootstrap: [AppComponent],
 })

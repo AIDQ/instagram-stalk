@@ -1,5 +1,27 @@
-<div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let i of count">
+<div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let a of accounts">
   <div class="row" style="margin-bottom:10px">
-
+    <md-card>
+      <md-card-header>
+        <button md-icon-button [mdMenuTriggerFor]="menu">
+          <span class="glyphicon glyphicon-menu-down"></span>
+        </button>
+        <md-menu #menu>
+          <button md-menu-item (click)="removeBtn(a.id)">Remove</button>
+        </md-menu>
+        <div md-card-avatar>
+          <img src="{{a.url}}">
+          <span class="glyphicon glyphicon-zoom-in" (click)="zoomInBtn(a.url)"></span>
+        </div>
+        <md-card-title><a href="/">@{{a.username}}</a></md-card-title>
+        <md-card-subtitle>{{a.posts}} posts</md-card-subtitle>
+        <md-card-subtitle>{{a.name}}</md-card-subtitle>
+      </md-card-header>
+      <md-card-content class="text-muted bio">
+        <p>{{a.bio}}</p>
+      </md-card-content>
+      <div class="toggle text-center">
+        <button md-button class="glyphicon glyphicon-option-horizontal"></button>
+      </div>
+    </md-card>
   </div>
 </div>

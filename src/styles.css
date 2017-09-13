@@ -1,7 +1,7 @@
 @import url('~@angular/material/prebuilt-themes/indigo-pink.css');
 @import url('~bootstrap/dist/css/bootstrap.min.css');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 body {
   padding: 65px 0;
+  overflow-y: scroll;
 }
