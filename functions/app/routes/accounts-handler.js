@@ -10,25 +10,30 @@ const instagram = new InstagramData()
 
 function accountsHandler(req, res) {
   let ids = req.query.id;
-  if (ids) {
-    if (!Array.isArray(ids)) {
-      ids = [ids];
-    }
-
-    instagram
-      .then((ig) => {
-        const accounts = ids.map((id) => ig.getAccountById(id));
-        return Promise.all(accounts);
-      })
-      .then((accounts) => {
-        res.json(accounts);
-      })
-      .catch((err) => {
-        res.status(500).send(err);
-      });
-  } else {
-    res.json([]);
+  if (!ids) {
+    ids = [];
   }
+  if (!Array.isArray(ids)) {
+    ids = [ids];
+  }
+
+  instagram
+    .then((ig) => {
+      const accounts = ids.map((id) => ig.getAccountById(id));
+      return Promise.all(accounts);
+    })
+    .then((accounts) => {
+      res.json({
+        success: true,
+        accounts: accounts,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        error: err,
+      });
+    });
 }
 
 module.exports = accountsHandler;

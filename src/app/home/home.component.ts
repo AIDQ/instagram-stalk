@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { ImagePopupComponent } from '../image-popup/image-popup.component';
 
@@ -7,15 +7,9 @@ import { ImagePopupComponent } from '../image-popup/image-popup.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
-  accounts = Array(10).fill({
-
-  });
+export class HomeComponent {
+  accounts = Array(10).fill();
   constructor(private dialog: MdDialog) { }
-
-  ngOnInit() {
-
-  }
 
   removeBtn(id: string) {
     console.log(id);

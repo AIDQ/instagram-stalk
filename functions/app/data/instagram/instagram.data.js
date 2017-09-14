@@ -4,6 +4,7 @@ const endpoints = require('./endpoints');
 class InstagramData {
   constructor() {
     this._jar = request.jar();
+    this.loggedIn = false;
   }
 
   login(username, password) {
@@ -20,6 +21,7 @@ class InstagramData {
       .then((cookies) => {
         return request.post(endpoints.loginUrl, {
           jar: this._jar,
+          json: true,
           headers: {
             'referer': `${endpoints.baseUrl}/`,
             'x-csrftoken': cookies.csrftoken,
@@ -27,8 +29,12 @@ class InstagramData {
           form: { username, password },
         })
       })
-      .then(() => this)
-      .catch((err) => Promise.reject(`Failed to login`));
+      .then((res) => {
+        if (res.authenticated && res.user) {
+          this.loggedIn = true;
+        }
+        return Promise.resolve(this);
+      });
   }
 
   getAccountByUsername(username) {
@@ -41,13 +47,16 @@ class InstagramData {
       .catch((err) => {
         const statusCode = err.response.statusCode;
         return Promise.reject(
-          `Unable to get user ${username}.` +
+          `Unable to get user '${username}'. ` +
           `Instagram responded with status code ${statusCode}.`
         )
       });
   }
 
   getAccountById(id) {
+    if (!this.loggedIn) {
+      return Promise.reject('getAccountById rquires authentication.');
+    }
     return request
       .get(endpoints.getFollowUrl(id), {
         jar: this._jar,
@@ -59,14 +68,8 @@ class InstagramData {
 
         if (statusCode >= 400) {
           return Promise.reject(
-            `Unable to get user with id ${id}. ` +
+            `Unable to get user with id '${id}'. ` +
             `Instagram responded with status code ${statusCode}.`
-          );
-        }
-        if (statusCode < 300) {
-          return Promise.reject(
-            `Unable to get user with id ${id}. ` +
-            `Instagram didn't redirect to useer's profile.`
           );
         }
         const redirectUrl = response.headers.location;

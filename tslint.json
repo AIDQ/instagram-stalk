@@ -143,6 +143,7 @@
       {
         "multiline": "always"
       }
-    ]
+    ],
+    "no-unused-variable": true
   }
 }

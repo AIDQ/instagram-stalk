@@ -1,6 +1,4 @@
-img {
-  max-height: 80%;
-  max-width: 80%;
-  display: block;
-  margin: auto;
+/* Warning ViewEncapsulation.Disabled */
+.mat-dialog-container {
+  max-width: unset;
 }
