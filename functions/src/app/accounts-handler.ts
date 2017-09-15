@@ -1,14 +1,15 @@
-const fs = require('fs');
-const path = require('path');
-const InstagramData = require('../data/instagram');
+import * as express from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
+import { InstagramData } from './data/instagram';
 
 const credentialsFile = path.join(__dirname, '../../instagram.credentials.json');
-const credentials = JSON.parse(fs.readFileSync(credentialsFile));
+const credentials = JSON.parse(fs.readFileSync(credentialsFile, 'utf-8'));
 
 const instagram = new InstagramData()
   .login(credentials.username, credentials.password);
 
-function accountsHandler(req, res) {
+export function accountsHandler(req: express.Request, res: express.Response) {
   let ids = req.query.id;
   if (!ids) {
     ids = [];
@@ -19,13 +20,13 @@ function accountsHandler(req, res) {
 
   instagram
     .then((ig) => {
-      const accounts = ids.map((id) => ig.getAccountById(id));
+      const accounts = ids.map((id: string) => ig.getAccountById(id));
       return Promise.all(accounts);
     })
     .then((accounts) => {
       res.json({
         success: true,
-        accounts: accounts,
+        accounts: accounts
       });
     })
     .catch((err) => {
@@ -35,5 +36,3 @@ function accountsHandler(req, res) {
       });
     });
 }
-
-module.exports = accountsHandler;

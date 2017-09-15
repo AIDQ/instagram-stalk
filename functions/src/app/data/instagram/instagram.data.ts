@@ -1,25 +1,29 @@
-const request = require('request-promise-native');
-const endpoints = require('./endpoints');
+import * as request from 'request';
+import * as requestPromise from 'request-promise-native';
+import endpoints from './endpoints';
 
-class InstagramData {
+export class InstagramData {
+  private _jar: request.CookieJar;
+  private loggedIn: boolean;
+
   constructor() {
-    this._jar = request.jar();
+    this._jar = requestPromise.jar();
     this.loggedIn = false;
   }
 
-  login(username, password) {
-    return request
+  login(username: string, password: string) {
+    return requestPromise
       .get(endpoints.baseUrl, {
         jar: this._jar,
       })
       .then(() => {
-        const cookies = {};
+        const cookies: any = {};
         this._jar.getCookies(endpoints.baseUrl)
-          .forEach((x) => cookies[x.key] = x.value);
+          .forEach((x: any) => cookies[x.key] = x.value);
         return cookies;
       })
       .then((cookies) => {
-        return request.post(endpoints.loginUrl, {
+        return requestPromise.post(endpoints.loginUrl, {
           jar: this._jar,
           json: true,
           headers: {
@@ -27,7 +31,7 @@ class InstagramData {
             'x-csrftoken': cookies.csrftoken,
           },
           form: { username, password },
-        })
+        });
       })
       .then((res) => {
         if (res.authenticated && res.user) {
@@ -37,11 +41,11 @@ class InstagramData {
       });
   }
 
-  getAccountByUsername(username) {
-    return request
+  getAccountByUsername(username: string) {
+    return requestPromise
       .get(endpoints.getAccountJsonUrl(username), {
         jar: this._jar,
-        json: true
+        json: true,
       })
       .then((r) => r.user)
       .catch((err) => {
@@ -49,15 +53,15 @@ class InstagramData {
         return Promise.reject(
           `Unable to get user '${username}'. ` +
           `Instagram responded with status code ${statusCode}.`
-        )
+        );
       });
   }
 
-  getAccountById(id) {
+  getAccountById(id: number | string) {
     if (!this.loggedIn) {
       return Promise.reject('getAccountById rquires authentication.');
     }
-    return request
+    return requestPromise
       .get(endpoints.getFollowUrl(id), {
         jar: this._jar,
         followRedirect: false,
@@ -69,7 +73,7 @@ class InstagramData {
         if (statusCode >= 400) {
           return Promise.reject(
             `Unable to get user with id '${id}'. ` +
-            `Instagram responded with status code ${statusCode}.`
+            `Instagram responded with status code ${statusCode}.`,
           );
         }
         const redirectUrl = response.headers.location;
@@ -79,5 +83,3 @@ class InstagramData {
       });
   }
 }
-
-module.exports = InstagramData;

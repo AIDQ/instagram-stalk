@@ -1,6 +1,12 @@
 {
-  "name": "functions",
+  "name": "instagram-stalk-functions",
+  "version": "1.0.0",
   "description": "Cloud Functions for Firebase",
+  "private": true,
+  "scripts": {
+    "compile:dev": "tsc --watch",
+    "compile:prod": "tsc"
+  },
   "dependencies": {
     "express": "^4.15.4",
     "firebase-admin": "~5.2.1",
@@ -8,5 +14,8 @@
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4"
   },
-  "private": true
+  "devDependencies": {
+    "@types/request-promise-native": "^1.0.6"
+  },
+  "license": "ISC"
 }
