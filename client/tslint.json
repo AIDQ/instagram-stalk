@@ -138,12 +138,6 @@
     "no-access-missing-member": true,
     "templates-use-public": true,
     "invoke-injectable": true,
-    "trailing-comma": [
-      true,
-      {
-        "multiline": "always"
-      }
-    ],
     "no-unused-variable": true
   }
 }

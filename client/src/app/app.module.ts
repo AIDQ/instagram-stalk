@@ -11,6 +11,7 @@ import { ImagePopupComponent } from './image-popup/image-popup.component';
 import { LoginComponent } from './users/login/login.component';
 import { RegisterComponent } from './users/register/register.component';
 import { FormsModule } from '@angular/forms';
+import { ValidateEqualDirective } from './common/validate-equal.directive';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 
     LoginComponent,
     RegisterComponent,
+    ValidateEqualDirective,
   ],
   imports: [
     BrowserModule,

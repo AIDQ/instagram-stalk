@@ -1,0 +1,13 @@
+.mat-card {
+  padding: 40px;
+}
+.title {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+button {
+  text-transform: uppercase;
+}

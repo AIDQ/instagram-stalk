@@ -4,9 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "ng": "ng",
-    "lint": "ng lint",
-    "build:dev": "ng build --watch --progress true",
+    "build:dev": "ng build --watch",
     "build:prod": "ng build --prod"
   },
   "dependencies": {

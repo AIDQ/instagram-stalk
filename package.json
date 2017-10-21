@@ -4,10 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "concurrently -k -r \"npm run start:client\" \"npm run start:functions\" \"npm run start:serve\"",
-    "start:client": "cd ./client && npm run build:dev",
-    "start:functions": "cd ./functions && npm run compile:dev",
-    "start:serve": "firebase serve --only hosting,functions",
+    "start": "concurrently -k -r \"cd ./client && npm run build:dev\" \"cd ./functions && npm run compile:dev\" \"firebase serve --only hosting,functions\"",
+    "deploy": "cd ./client && npm run build:prod && cd ../functions && npm run compile:prod && cd .. && firebase deploy",
     "postinstall": "cd ./functions && npm install && cd ../client && npm install"
   },
   "author": "",

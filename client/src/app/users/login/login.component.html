@@ -1,18 +1,32 @@
 <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-center">
   <md-card>
-    <form #f="ngForm" (ngSubmit)="f.valid && login()">
+    <form #f="ngForm"
+      (ngSubmit)="f.valid && login()">
       <h2 class="title">Login</h2>
       <div class="form-group">
         <md-form-field>
-          <input type="email" name="email" placeholder="Email" [(ngModel)]="model.email" mdInput email required>
+          <input type="email"
+            name="email"
+            placeholder="Email"
+            [(ngModel)]="model.email"
+            mdInput
+            email
+            required>
         </md-form-field>
       </div>
       <div class="form-group">
         <md-form-field>
-          <input type="password" name="password" placeholder="Password" [(ngModel)]="model.password" mdInput required>
+          <input type="password"
+            name="password"
+            placeholder="Password"
+            [(ngModel)]="model.password"
+            mdInput
+            required>
         </md-form-field>
       </div>
-      <button color="primary" type="submit" md-raised-button>Login</button>
+      <button type="submit"
+        md-raised-button
+        color="primary">Login</button>
     </form>
   </md-card>
 </div>
