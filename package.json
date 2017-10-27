@@ -4,12 +4,12 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "concurrently -k -r \"cd ./client && npm run build:dev\" \"cd ./functions && npm run compile:dev\" \"firebase serve --only hosting,functions\"",
-    "deploy": "cd ./client && npm run build:prod && cd ../functions && npm run compile:prod && cd .. && firebase deploy",
+    "start": "concurrently -k -r \"cd ./client && npm run build:dev\" \"cd ./functions && npm run build:dev\" \"firebase serve --only hosting,functions\"",
+    "deploy": "cd ./client && npm run build:prod && cd ../functions && npm run build:prod && cd .. && firebase deploy",
     "postinstall": "cd ./functions && npm install && cd ../client && npm install"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "concurrently": "^3.5.0"
   }

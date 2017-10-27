@@ -4,8 +4,8 @@
   "description": "Cloud Functions for Firebase",
   "private": true,
   "scripts": {
-    "compile:dev": "tsc --watch",
-    "compile:prod": "tsc"
+    "build:dev": "tsc --watch",
+    "build:prod": "tsc"
   },
   "dependencies": {
     "express": "^4.15.4",
@@ -17,5 +17,5 @@
   "devDependencies": {
     "@types/request-promise-native": "^1.0.6"
   },
-  "license": "ISC"
+  "license": "MIT"
 }
