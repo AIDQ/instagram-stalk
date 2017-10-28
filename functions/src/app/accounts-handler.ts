@@ -1,28 +1,33 @@
 import * as express from 'express';
-import * as fs from 'fs';
-import * as path from 'path';
-import { InstagramData } from './data/instagram';
+import { InstagramData } from '../data/instagram';
 
-const credentialsFile = path.join(__dirname, '../../instagram.credentials.json');
-const credentials = JSON.parse(fs.readFileSync(credentialsFile, 'utf-8'));
+function _queryToArray(q: any) {
+  let arr = q;
+  if (!arr) arr = [];
+  if (!Array.isArray(arr)) arr = [arr];
+  return arr as string[];
+}
 
-const instagram = new InstagramData()
-  .login(credentials.username, credentials.password);
+export function getAccountsHandler(req: express.Request, res: express.Response) {
+  const igUsername = req.header('x-ig-username');
+  const igPassword = req.header('x-ig-password');
 
-export function accountsHandler(req: express.Request, res: express.Response) {
-  let ids = req.query.id;
-  if (!ids) {
-    ids = [];
+  if (!igUsername || !igPassword) {
+    return res.json({
+      success: false,
+      error: `Provide 'x-ig-username' and 'x-ig-password' in header.`
+    });
   }
-  if (!Array.isArray(ids)) {
-    ids = [ids];
-  }
 
-  instagram
-    .then((ig) => {
-      const accounts = ids.map((id: string) => ig.getAccountById(id));
-      return Promise.all(accounts);
-    })
+  const instagram = new InstagramData(igUsername, igPassword);
+
+  const ids = _queryToArray(req.query.id);
+  const usernames = _queryToArray(req.query.u);
+
+  const byId = ids.map((id) => instagram.getAccountById(id));
+  const byUsername = usernames.map((u) => instagram.getAccountByUsername(u));
+
+  return Promise.all(byId.concat(byUsername))
     .then((accounts) => {
       res.json({
         success: true,
@@ -30,9 +35,9 @@ export function accountsHandler(req: express.Request, res: express.Response) {
       });
     })
     .catch((err) => {
-      res.status(500).json({
+      res.json({
         success: false,
-        error: err,
+        error: err
       });
     });
 }
